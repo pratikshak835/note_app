@@ -7,19 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/PdfViewerScreen.dart';
 import 'package:notes_app/document_not_present.dart';
 
-class PhysicsNotesPage extends StatefulWidget {
-  const PhysicsNotesPage({Key? key}) : super(key: key);
+class QuestionsSemester8Page extends StatefulWidget {
+  const QuestionsSemester8Page({Key? key}) : super(key: key);
 
   @override
-  State<PhysicsNotesPage> createState() => _PhysicsNotesPageState();
+  State<QuestionsSemester8Page> createState() => _QuestionsSemester8Page();
 }
 
-class _PhysicsNotesPageState extends State<PhysicsNotesPage> {
+class _QuestionsSemester8Page extends State<QuestionsSemester8Page> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> pdfData = [];
   Future<String> uploadPdf(String fileName, File file) async {
     final reference =
-        FirebaseStorage.instance.ref().child("physicsPdfs / $fileName.pdf");
+        FirebaseStorage.instance.ref().child("Qsemester8 / $fileName.pdf");
     final uploadTask = reference.putFile(file);
     await uploadTask.whenComplete(() {});
     final downloadLink = await reference.getDownloadURL();
@@ -40,7 +40,7 @@ class _PhysicsNotesPageState extends State<PhysicsNotesPage> {
       String fileName = pickedFile.files[0].name;
       File file = File(pickedFile.files[0].path!);
       final downloadLink = await uploadPdf(fileName, file);
-      _firebaseFirestore.collection("physicsPdfs").add({
+      _firebaseFirestore.collection("Qsemester8").add({
         "name": fileName,
         "url": downloadLink,
       });
@@ -51,7 +51,7 @@ class _PhysicsNotesPageState extends State<PhysicsNotesPage> {
   }
 
   void getAllPdf() async {
-    final results = await _firebaseFirestore.collection("physicsPdfs").get();
+    final results = await _firebaseFirestore.collection("Qsemester8").get();
     pdfData = results.docs.map((e) => e.data()).toList();
     setState(() {
       isResponse = false;
@@ -78,7 +78,7 @@ class _PhysicsNotesPageState extends State<PhysicsNotesPage> {
               BorderRadius.circular(20), // Adjust the radius as needed
         ),
         backgroundColor: Colors.teal,
-        title: const Text("Physics Note's",
+        title: const Text("Semester 8",
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,

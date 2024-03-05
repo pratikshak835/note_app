@@ -7,19 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/PdfViewerScreen.dart';
 import 'package:notes_app/document_not_present.dart';
 
-class EnglishNotesPage extends StatefulWidget {
-  const EnglishNotesPage({Key? key}) : super(key: key);
+class PreviousSemester3Page extends StatefulWidget {
+  const PreviousSemester3Page({Key? key}) : super(key: key);
 
   @override
-  State<EnglishNotesPage> createState() => _EnglishNotesPageState();
+  State<PreviousSemester3Page> createState() => _PreviousSemester3Page();
 }
 
-class _EnglishNotesPageState extends State<EnglishNotesPage> {
+class _PreviousSemester3Page extends State<PreviousSemester3Page> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> pdfData = [];
   Future<String> uploadPdf(String fileName, File file) async {
     final reference =
-        FirebaseStorage.instance.ref().child("pdfs / $fileName.pdf");
+        FirebaseStorage.instance.ref().child("Psemester3 / $fileName.pdf");
     final uploadTask = reference.putFile(file);
     await uploadTask.whenComplete(() {});
     final downloadLink = await reference.getDownloadURL();
@@ -40,7 +40,7 @@ class _EnglishNotesPageState extends State<EnglishNotesPage> {
       String fileName = pickedFile.files[0].name;
       File file = File(pickedFile.files[0].path!);
       final downloadLink = await uploadPdf(fileName, file);
-      _firebaseFirestore.collection("pdfs").add({
+      _firebaseFirestore.collection("Psemester3").add({
         "name": fileName,
         "url": downloadLink,
       });
@@ -51,7 +51,7 @@ class _EnglishNotesPageState extends State<EnglishNotesPage> {
   }
 
   void getAllPdf() async {
-    final results = await _firebaseFirestore.collection("pdfs").get();
+    final results = await _firebaseFirestore.collection("Psemester3").get();
     pdfData = results.docs.map((e) => e.data()).toList();
     setState(() {
       isResponse = false;
@@ -78,7 +78,7 @@ class _EnglishNotesPageState extends State<EnglishNotesPage> {
               BorderRadius.circular(20), // Adjust the radius as needed
         ),
         backgroundColor: Colors.teal,
-        title: const Text("English Note's",
+        title: const Text("Semester 3",
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,

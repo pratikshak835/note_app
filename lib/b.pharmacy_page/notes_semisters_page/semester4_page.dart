@@ -7,19 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/PdfViewerScreen.dart';
 import 'package:notes_app/document_not_present.dart';
 
-class MathsNotesPage extends StatefulWidget {
-  const MathsNotesPage({Key? key}) : super(key: key);
+class NotesSemester4Page extends StatefulWidget {
+  const NotesSemester4Page({Key? key}) : super(key: key);
 
   @override
-  State<MathsNotesPage> createState() => _MathsNotesPageState();
+  State<NotesSemester4Page> createState() => _NotesSemester4PageState();
 }
 
-class _MathsNotesPageState extends State<MathsNotesPage> {
+class _NotesSemester4PageState extends State<NotesSemester4Page> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> pdfData = [];
   Future<String> uploadPdf(String fileName, File file) async {
     final reference =
-        FirebaseStorage.instance.ref().child("mathsPdfs / $fileName.pdf");
+        FirebaseStorage.instance.ref().child("semester4 / $fileName.pdf");
     final uploadTask = reference.putFile(file);
     await uploadTask.whenComplete(() {});
     final downloadLink = await reference.getDownloadURL();
@@ -40,7 +40,7 @@ class _MathsNotesPageState extends State<MathsNotesPage> {
       String fileName = pickedFile.files[0].name;
       File file = File(pickedFile.files[0].path!);
       final downloadLink = await uploadPdf(fileName, file);
-      _firebaseFirestore.collection("mathsPdfs").add({
+      _firebaseFirestore.collection("semester4").add({
         "name": fileName,
         "url": downloadLink,
       });
@@ -51,7 +51,7 @@ class _MathsNotesPageState extends State<MathsNotesPage> {
   }
 
   void getAllPdf() async {
-    final results = await _firebaseFirestore.collection("mathsPdfs").get();
+    final results = await _firebaseFirestore.collection("semester4").get();
     pdfData = results.docs.map((e) => e.data()).toList();
     setState(() {
       isResponse = false;
@@ -78,7 +78,7 @@ class _MathsNotesPageState extends State<MathsNotesPage> {
               BorderRadius.circular(20), // Adjust the radius as needed
         ),
         backgroundColor: Colors.teal,
-        title: const Text("Maths Note's",
+        title: const Text("Semester 4",
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
