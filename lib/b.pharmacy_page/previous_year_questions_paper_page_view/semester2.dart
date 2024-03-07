@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/PdfViewerScreen.dart';
-import 'package:notes_app/document_not_present.dart';
+import 'package:notes_app/home_page/document_not_present.dart';
+import 'package:notes_app/pdf_viewer_screen/PdfViewerScreen.dart';
 
 class PreviousSemester2Page extends StatefulWidget {
   const PreviousSemester2Page({Key? key}) : super(key: key);
@@ -85,64 +85,87 @@ class _PreviousSemester2Page extends State<PreviousSemester2Page> {
                 color: Colors.white)),
       ),
       body: isResponse
-          ? Center(
-              child: Container(
-                  width: 80,
-                  height: 80,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: Colors.white70, width: 1)),
-                  child: const MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: CircularProgressIndicator(),
-                  )),
+          ? Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  opacity: 0.7,
+                  image: AssetImage('assets/slash_screen.jpg'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: Center(
+                child: Container(
+                    width: 80,
+                    height: 80,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border:
+                            Border.all(color: Colors.transparent, width: 1)),
+                    child: const MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: CircularProgressIndicator(),
+                    )),
+              ),
             )
           : pdfData.isEmpty
               ? const DocumentNotPresent()
-              : Stack(children: [
-                  GridView.builder(
-                    padding: const EdgeInsets.all(10),
-                    itemCount: pdfData.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                    itemBuilder: (BuildContext context, int index) {
-                      isResponse = false;
-                      return InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => PdfViewerScreen(
-                                    pdfUrl: pdfData[index]['url'],
-                                  )));
-                        },
-                        child: Card(
-                          color: Colors.teal,
-                          child: GridTile(
-                            child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Image.asset(
-                                      "assets/pdf.png",
-                                      width: 140,
-                                      height: 80,
-                                    ),
-                                    Text(
-                                      pdfData[index]['name'],
-                                      style: const TextStyle(fontSize: 18),
-                                    )
-                                  ],
-                                )), //just for testing, will fill with image later
-                          ),
-                        ),
-                      );
-                    },
+              : Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      opacity: 0.7,
+                      image: AssetImage('assets/slash_screen.jpg'),
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ]),
+                  child: Stack(children: [
+                    GridView.builder(
+                      padding: const EdgeInsets.all(10),
+                      itemCount: pdfData.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
+                      itemBuilder: (BuildContext context, int index) {
+                        isResponse = false;
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PdfViewerScreen(
+                                      pdfUrl: pdfData[index]['url'],
+                                    )));
+                          },
+                          child: Card(
+                            color: Colors.teal,
+                            child: GridTile(
+                              child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Image.asset(
+                                        "assets/pdf.png",
+                                        width: 140,
+                                        height: 80,
+                                      ),
+                                      Text(
+                                        pdfData[index]['name'],
+                                        style: const TextStyle(fontSize: 18),
+                                      )
+                                    ],
+                                  )), //just for testing, will fill with image later
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ]),
+                ),
       floatingActionButton: FloatingActionButton(
         onPressed: pickFile,
         backgroundColor: Colors.white,

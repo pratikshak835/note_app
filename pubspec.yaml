@@ -41,6 +41,7 @@ dependencies:
   file_picker: ^5.3.4
   easy_pdf_viewer: ^1.0.7
   url_launcher: ^6.2.5
+  share: ^2.0.4
 
 dev_dependencies:
   flutter_test:
@@ -68,7 +69,10 @@ flutter:
   assets:
     - assets/pdf.png
     - assets/empty_folder.png
-    - assets/dna1.jfif
+    - assets/slash_screen.jpg
+    - assets/share.png
+    - assets/app_logo.jpg
+    - assets/app_logo-removebg-preview.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
