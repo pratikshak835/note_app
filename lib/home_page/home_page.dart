@@ -14,11 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final screen = [
-    const Center(
-      child: Text("home"),
-    )
-  ];
 
   Future<void> _launchInBrowser(String url) async {
     if (!await launch(
